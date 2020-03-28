@@ -6,7 +6,6 @@ import colors from '../Colors';
 const TodoList = ({ list }: { list: TempData }) => {
   const completedCount = list.todos.filter(todo => todo.completed).length;
   const remainingCount = list.todos.length - completedCount;
-  console.log('completedCount', completedCount);
   return (
     <View style={[styles.listContainer, { backgroundColor: list.color }]}>
       <Text style={styles.listTitle} numberOfLines={1}>
