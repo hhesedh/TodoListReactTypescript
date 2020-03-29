@@ -3,7 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TempData } from '../tempData';
 import colors from '../Colors';
 
-const TodoList = ({ list }: { list: TempData }) => {
+interface TodoListProp {
+  list: TempData;
+}
+const TodoList = ({ list }: TodoListProp) => {
   const completedCount = list.todos.filter(todo => todo.completed).length;
   const remainingCount = list.todos.length - completedCount;
   return (

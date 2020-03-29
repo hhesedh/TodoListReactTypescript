@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, Modal } from 'react
 import { AntDesign } from '@expo/vector-icons';
 import colors from './Colors';
 import tempData from './tempData';
-import { TempData } from './tempData';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 
@@ -46,7 +45,7 @@ export default class App extends Component<AppProp, AppState> {
         <View style={{ height: 275, paddingLeft: 32 }}>
           <FlatList
             data={tempData}
-            keyExtractor={(item: TempData) => item.name}
+            keyExtractor={item => item.name}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => <TodoList list={item} />}
