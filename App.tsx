@@ -11,9 +11,13 @@ interface AppState {
   addToVisible: boolean;
 }
 export default class App extends Component<AppProp, AppState> {
-  state = {
-    addToVisible: false,
-  };
+  constructor(props: AppProp) {
+    super(props);
+
+    this.state = {
+      addToVisible: false,
+    };
+  }
 
   toggleAddTodoModal() {
     this.setState({ addToVisible: !this.state.addToVisible });
