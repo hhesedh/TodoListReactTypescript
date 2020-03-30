@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import colors from '../Colors';
-import tempData from '../tempData';
+import CreateTodoData from '../models/CreateTodoData';
 
 interface AddListModalState {
   name: string;
@@ -18,6 +18,7 @@ interface AddListModalState {
 }
 interface AddListModalProp {
   closeModal(): void;
+  addList(list: CreateTodoData): void;
 }
 
 export default class AddListModal extends Component<AddListModalProp, AddListModalState> {
@@ -35,11 +36,9 @@ export default class AddListModal extends Component<AddListModalProp, AddListMod
   createTodo() {
     const { name, color } = this.state;
 
-    tempData.push({
-      name,
-      color,
-      todos: [],
-    });
+    const list: CreateTodoData = { name, color };
+
+    this.props.addList(list);
 
     this.setState({ name: '' });
     this.props.closeModal();

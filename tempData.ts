@@ -4,6 +4,7 @@ import { TaskData } from './models/TaskData';
 
 const tempData: TaskData[] = [
   {
+    id: 1,
     name: 'Plan a Trip',
     color: '#24A6d9',
     todos: [
@@ -26,6 +27,7 @@ const tempData: TaskData[] = [
     ],
   },
   {
+    id: 2,
     name: 'Errands',
     color: '#24A6d9',
     todos: [
@@ -48,6 +50,7 @@ const tempData: TaskData[] = [
     ],
   },
   {
+    id: 3,
     name: 'Read a Book',
     color: '#24A6d9',
     todos: [

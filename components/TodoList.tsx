@@ -6,6 +6,7 @@ import { TaskData } from '../models/TaskData';
 
 interface TodoListProp {
   list: TaskData;
+  updateList(list: TaskData): void;
 }
 
 interface TodoListState {
@@ -34,7 +35,11 @@ class TodoList extends Component<TodoListProp, TodoListState> {
           animationType="slide"
           visible={this.state.showListVisible}
           onRequestClose={() => this.toggleListModal()}>
-          <TodoModal list={list} closeModal={() => this.toggleListModal()} />
+          <TodoModal
+            list={list}
+            closeModal={() => this.toggleListModal()}
+            updateList={this.props.updateList}
+          />
         </Modal>
         <TouchableOpacity
           style={[styles.listContainer, { backgroundColor: list.color }]}
@@ -44,11 +49,11 @@ class TodoList extends Component<TodoListProp, TodoListState> {
           </Text>
           <View>
             <View style={{ alignItems: 'center' }}>
-              <Text style={styles.count}>{completedCount}</Text>
+              <Text style={styles.count}>{remainingCount}</Text>
               <Text style={styles.subtitle}>Remaining</Text>
             </View>
             <View style={{ alignItems: 'center' }}>
-              <Text style={styles.count}>{remainingCount}</Text>
+              <Text style={styles.count}>{completedCount}</Text>
               <Text style={styles.subtitle}>Completed</Text>
             </View>
           </View>

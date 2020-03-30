@@ -6,17 +6,21 @@ import tempData from './tempData';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 import { TaskData } from './models/TaskData';
+import CreateTodoData from './models/CreateTodoData';
 
 interface AppProp {}
 interface AppState {
   addToVisible: boolean;
+  lists: TaskData[];
 }
+
 export default class App extends Component<AppProp, AppState> {
   constructor(props: AppProp) {
     super(props);
 
     this.state = {
       addToVisible: false,
+      lists: tempData,
     };
   }
 
@@ -25,7 +29,19 @@ export default class App extends Component<AppProp, AppState> {
   }
 
   renderList(list: TaskData) {
-    return <TodoList list={list} />;
+    return <TodoList list={list} updateList={(list: TaskData) => this.updateList(list)} />;
+  }
+
+  addList(list: CreateTodoData) {
+    this.setState({
+      lists: [...this.state.lists, { ...list, id: this.state.lists.length + 1, todos: [] }],
+    });
+  }
+
+  updateList(list: TaskData) {
+    this.setState({
+      lists: this.state.lists.map(item => (item.id === list.id ? list : item)),
+    });
   }
 
   render() {
@@ -35,7 +51,10 @@ export default class App extends Component<AppProp, AppState> {
           animationType="slide"
           visible={this.state.addToVisible}
           onRequestClose={() => this.toggleAddTodoModal()}>
-          <AddListModal closeModal={() => this.toggleAddTodoModal()} />
+          <AddListModal
+            closeModal={() => this.toggleAddTodoModal()}
+            addList={(newTodoList: CreateTodoData) => this.addList(newTodoList)}
+          />
         </Modal>
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.divider} />
@@ -53,11 +72,12 @@ export default class App extends Component<AppProp, AppState> {
         </View>
         <View style={{ height: 275, paddingLeft: 32 }}>
           <FlatList
-            data={tempData}
-            keyExtractor={item => item.name}
+            data={this.state.lists}
+            keyExtractor={item => String(item.id)}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => this.renderList(item)}
+            keyboardShouldPersistTaps="always"
           />
         </View>
       </View>
