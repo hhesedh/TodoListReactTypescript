@@ -1,5 +1,5 @@
 // Temporary data until we connect with Firebase
-interface Todos {
+export interface Todos {
   title: string;
   completed: boolean;
 }
