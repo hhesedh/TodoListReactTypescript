@@ -1,16 +1,8 @@
 // Temporary data until we connect with Firebase
-export interface Todos {
-  title: string;
-  completed: boolean;
-}
 
-export interface TempData {
-  name: string;
-  color: string;
-  todos: Todos[];
-}
+import { TaskData } from './models/TaskData';
 
-const tempData: TempData[] = [
+const tempData: TaskData[] = [
   {
     name: 'Plan a Trip',
     color: '#24A6d9',

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import colors from './Colors';
-import tempData, { TempData } from './tempData';
+import tempData from './tempData';
 import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
+import { TaskData } from './models/TaskData';
 
 interface AppProp {}
 interface AppState {
@@ -23,7 +24,7 @@ export default class App extends Component<AppProp, AppState> {
     this.setState({ addToVisible: !this.state.addToVisible });
   }
 
-  renderList(list: TempData) {
+  renderList(list: TaskData) {
     return <TodoList list={list} />;
   }
 

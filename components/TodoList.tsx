@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Modal } from 'react-native';
-import { TempData } from '../tempData';
 import colors from '../Colors';
 import TodoModal from './TodoModal';
+import { TaskData } from '../models/TaskData';
 
 interface TodoListProp {
-  list: TempData;
+  list: TaskData;
 }
 
 interface TodoListState {

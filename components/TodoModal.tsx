@@ -9,19 +9,20 @@ import {
   KeyboardAvoidingView,
   TextInput,
 } from 'react-native';
-import { TempData, Todos } from '../tempData';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
+import { TaskData } from '../models/TaskData';
+import { Todo } from '../models/Todo';
 
 interface TodoModalProp {
-  list: TempData;
+  list: TaskData;
   closeModal(): void;
 }
 
 interface TodoModalState {
   name: string;
   color: string;
-  todos: Todos[];
+  todos: Todo[];
 }
 
 export default class TodoModal extends Component<TodoModalProp, TodoModalState> {
@@ -35,7 +36,7 @@ export default class TodoModal extends Component<TodoModalProp, TodoModalState> 
     };
   }
 
-  renderTodo(todo: Todos) {
+  renderTodo(todo: Todo) {
     return (
       <View style={styles.todoContainer}>
         <TouchableOpacity>
