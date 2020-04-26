@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Keyboard,
+  Platform,
 } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import colors from '../Colors';
@@ -78,7 +79,9 @@ export default class TodoModal extends Component<TodoModalProp, TodoModalState> 
     const taskCount = list.todos.length;
     const completedCount = list.todos.filter((todo) => todo.completed).length;
     return (
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'android' ? undefined : 'padding'}>
         <SafeAreaView style={styles.container}>
           <TouchableOpacity
             style={{ position: 'absolute', top: 64, right: 32, zIndex: 10 }}
@@ -97,7 +100,7 @@ export default class TodoModal extends Component<TodoModalProp, TodoModalState> 
             <FlatList
               data={list.todos}
               renderItem={({ item, index }) => this.renderTodo(item, index)}
-              keyExtractor={(item) => item.title}
+              keyExtractor={(_, index) => index.toString()}
               contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
               showsVerticalScrollIndicator={false}
             />

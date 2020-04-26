@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Modal } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+  Modal,
+  ActivityIndicator,
+} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import colors from './Colors';
 import tempData from './tempData';
@@ -7,11 +15,15 @@ import TodoList from './components/TodoList';
 import AddListModal from './components/AddListModal';
 import { TaskData } from './models/TaskData';
 import CreateTodoData from './models/CreateTodoData';
+import Fire from './Fire';
+import { User } from 'firebase';
 
 interface AppProp {}
 interface AppState {
   addToVisible: boolean;
   lists: TaskData[];
+  user: User | null;
+  loading: boolean;
 }
 
 export default class App extends Component<AppProp, AppState> {
@@ -20,8 +32,28 @@ export default class App extends Component<AppProp, AppState> {
 
     this.state = {
       addToVisible: false,
-      lists: tempData,
+      lists: [],
+      user: null,
+      loading: true,
     };
+  }
+
+  fira;
+  componentDidMount() {
+    this.fira = new Fire((error, user: User) => {
+      if (error) {
+        return alert('uh oh, something went wrong');
+      }
+      this.fira.getLists((lists: TaskData[]) => {
+        this.setState({ lists, user }, () => {
+          this.setState({ loading: false });
+        });
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    this.fira.detach();
   }
 
   toggleAddTodoModal = () => {
@@ -45,6 +77,14 @@ export default class App extends Component<AppProp, AppState> {
   };
 
   render() {
+    if (this.state.loading) {
+      return (
+        <View style={styles.container}>
+          <Text>Loading</Text>
+          <ActivityIndicator size="large" color={colors.blue} />
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
         <Modal
@@ -73,7 +113,7 @@ export default class App extends Component<AppProp, AppState> {
         <View style={{ height: 275, paddingLeft: 32 }}>
           <FlatList
             data={this.state.lists}
-            keyExtractor={(item) => String(item.id)}
+            keyExtractor={(item) => item.id.toString()}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => this.renderList(item)}
