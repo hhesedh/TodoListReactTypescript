@@ -24,25 +24,25 @@ export default class App extends Component<AppProp, AppState> {
     };
   }
 
-  toggleAddTodoModal() {
+  toggleAddTodoModal = () => {
     this.setState({ addToVisible: !this.state.addToVisible });
-  }
+  };
 
-  renderList(list: TaskData) {
+  renderList = (list: TaskData) => {
     return <TodoList list={list} updateList={(list: TaskData) => this.updateList(list)} />;
-  }
+  };
 
-  addList(list: CreateTodoData) {
+  addList = (list: CreateTodoData) => {
     this.setState({
       lists: [...this.state.lists, { ...list, id: this.state.lists.length + 1, todos: [] }],
     });
-  }
+  };
 
-  updateList(list: TaskData) {
+  updateList = (list: TaskData) => {
     this.setState({
-      lists: this.state.lists.map(item => (item.id === list.id ? list : item)),
+      lists: this.state.lists.map((item) => (item.id === list.id ? list : item)),
     });
-  }
+  };
 
   render() {
     return (
@@ -50,9 +50,9 @@ export default class App extends Component<AppProp, AppState> {
         <Modal
           animationType="slide"
           visible={this.state.addToVisible}
-          onRequestClose={() => this.toggleAddTodoModal()}>
+          onRequestClose={this.toggleAddTodoModal}>
           <AddListModal
-            closeModal={() => this.toggleAddTodoModal()}
+            closeModal={this.toggleAddTodoModal}
             addList={(newTodoList: CreateTodoData) => this.addList(newTodoList)}
           />
         </Modal>
@@ -64,7 +64,7 @@ export default class App extends Component<AppProp, AppState> {
           <View style={styles.divider} />
         </View>
         <View style={{ marginVertical: 48 }}>
-          <TouchableOpacity style={styles.addList} onPress={() => this.toggleAddTodoModal()}>
+          <TouchableOpacity style={styles.addList} onPress={this.toggleAddTodoModal}>
             <AntDesign name="plus" size={16} color={colors.blue} />
           </TouchableOpacity>
 
@@ -73,7 +73,7 @@ export default class App extends Component<AppProp, AppState> {
         <View style={{ height: 275, paddingLeft: 32 }}>
           <FlatList
             data={this.state.lists}
-            keyExtractor={item => String(item.id)}
+            keyExtractor={(item) => String(item.id)}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => this.renderList(item)}

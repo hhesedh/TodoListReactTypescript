@@ -33,7 +33,7 @@ export default class AddListModal extends Component<AddListModalProp, AddListMod
     };
   }
 
-  createTodo() {
+  createTodo = () => {
     const { name, color } = this.state;
 
     const list: CreateTodoData = { name, color };
@@ -42,17 +42,17 @@ export default class AddListModal extends Component<AddListModalProp, AddListMod
 
     this.setState({ name: '' });
     this.props.closeModal();
-  }
+  };
 
-  renderColors() {
-    return this.backgroundColors.map(color => (
+  renderColors = () => {
+    return this.backgroundColors.map((color) => (
       <TouchableOpacity
         key={color}
         style={[styles.colorSelect, { backgroundColor: color }]}
         onPress={() => this.setState({ color })}
       />
     ));
-  }
+  };
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -67,14 +67,14 @@ export default class AddListModal extends Component<AddListModalProp, AddListMod
           <TextInput
             style={styles.input}
             placeholder="List Name?"
-            onChangeText={text => this.setState({ name: text })}
+            onChangeText={(text) => this.setState({ name: text })}
           />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12 }}>
             {this.renderColors()}
           </View>
           <TouchableOpacity
             style={[styles.create, { backgroundColor: this.state.color }]}
-            onPress={() => this.createTodo()}>
+            onPress={this.createTodo}>
             <Text style={{ color: colors.white, fontWeight: '600' }}>Create!</Text>
           </TouchableOpacity>
         </View>

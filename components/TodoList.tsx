@@ -21,29 +21,29 @@ class TodoList extends Component<TodoListProp, TodoListState> {
     };
   }
 
-  toggleListModal() {
+  toggleListModal = () => {
     this.setState({ showListVisible: !this.state.showListVisible });
-  }
+  };
 
   render() {
     const { list } = this.props;
-    const completedCount = list.todos.filter(todo => todo.completed).length;
+    const completedCount = list.todos.filter((todo) => todo.completed).length;
     const remainingCount = list.todos.length - completedCount;
     return (
       <View>
         <Modal
           animationType="slide"
           visible={this.state.showListVisible}
-          onRequestClose={() => this.toggleListModal()}>
+          onRequestClose={this.toggleListModal}>
           <TodoModal
             list={list}
-            closeModal={() => this.toggleListModal()}
+            closeModal={this.toggleListModal}
             updateList={this.props.updateList}
           />
         </Modal>
         <TouchableOpacity
           style={[styles.listContainer, { backgroundColor: list.color }]}
-          onPress={() => this.toggleListModal()}>
+          onPress={this.toggleListModal}>
           <Text style={styles.listTitle} numberOfLines={1}>
             {list.name}
           </Text>

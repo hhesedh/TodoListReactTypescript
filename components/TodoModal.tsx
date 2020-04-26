@@ -40,13 +40,13 @@ export default class TodoModal extends Component<TodoModalProp, TodoModalState> 
     this.props.updateList(list);
   }
 
-  addTodo() {
+  addTodo = () => {
     const { list } = this.props;
     list.todos.push({ title: this.state.newTodo, completed: false });
     this.props.updateList(list);
     this.setState({ newTodo: '' });
     Keyboard.dismiss();
-  }
+  };
 
   renderTodo(todo: Todo, index: number) {
     return (
@@ -76,7 +76,7 @@ export default class TodoModal extends Component<TodoModalProp, TodoModalState> 
   render() {
     const { list } = this.props;
     const taskCount = list.todos.length;
-    const completedCount = list.todos.filter(todo => todo.completed).length;
+    const completedCount = list.todos.filter((todo) => todo.completed).length;
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
         <SafeAreaView style={styles.container}>
@@ -97,7 +97,7 @@ export default class TodoModal extends Component<TodoModalProp, TodoModalState> 
             <FlatList
               data={list.todos}
               renderItem={({ item, index }) => this.renderTodo(item, index)}
-              keyExtractor={item => item.title}
+              keyExtractor={(item) => item.title}
               contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
               showsVerticalScrollIndicator={false}
             />
@@ -105,7 +105,7 @@ export default class TodoModal extends Component<TodoModalProp, TodoModalState> 
           <View style={[styles.section, styles.footer]}>
             <TextInput
               style={[styles.input, { borderColor: list.color }]}
-              onChangeText={text => this.setState({ newTodo: text })}
+              onChangeText={(text) => this.setState({ newTodo: text })}
               value={this.state.newTodo}
             />
             <TouchableOpacity
